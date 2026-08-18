@@ -1,0 +1,8 @@
+# index.html is a Ruffle loader page, not the project's actual source — the
+# game itself is Flash/AS3, compiled into the .swf/.exe binaries Linguist
+# can't read as text.
+*.html linguist-detectable=false
+
+# Adobe's as3corelib, vendored — not Take-0's own code, so it shouldn't
+# stand in for it in the language stats.
+src/src/com/adobe/** linguist-vendored
