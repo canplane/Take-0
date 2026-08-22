@@ -1,96 +1,101 @@
-﻿# Take 0
-DJMAX를 오마주 삼아 제작한 건반형 리듬 게임
+# Take 0
 
-**[플레이 영상](https://youtu.be/WT77iWaUDgw)**
+A keyboard rhythm game built as an homage to [DJMAX](https://en.wikipedia.org/wiki/DJMax).
 
-![Logo](https://user-images.githubusercontent.com/69769067/183470850-b577de7d-e449-47cf-a99d-dc21eabe0817.jpg)
+![Logo](.github/assets/logo.jpg)
 
-* 최신 버전 : `v1.1.0` (July 30, 2022)
-* 플랫폼 : Windows
-* 소스 코드 : [GitHub](https://github.com/canplane/Take-0)
-* 개발자 : [canplane](https://canplane.com)
-* 작업 기간 : 2015. 6. 5. ~ 11., 2022. 7. 8. ~ 30.
-* 사용 기술 : Adobe Flash CS6 (ActionScript 3.0)
+**[Gameplay video](https://youtu.be/cUBBpqlfMAc)**
 
-* 스크린샷 :
+## Screenshots
 
-<img alt="1" src="https://user-images.githubusercontent.com/69769067/183472092-bd0e41fa-8436-4e87-89c6-78d3f494eaf4.jpg" width="1280">
-<img alt="2" src="https://user-images.githubusercontent.com/69769067/183472076-06adc248-3e3e-4924-af88-4d5eb8424efb.jpg" width="1280">
+<img alt="1" src=".github/assets/1.jpg" width="1280">
+<img alt="2" src=".github/assets/2.jpg" width="1280">
 
+## Usage
 
-## 업데이트 내역
+- `play.exe`: the game itself
+- `make.exe`: note data editor
+- `config.exe`: key bindings, scroll speed, and offset settings
+- Scroll speed: 1–5 in steps of 0.5, `↑`/`↓` to adjust
+- Pause during play: `Esc`
 
-* `v1.1.0` (July 30, 2022) :
-	* 오프셋 설정 기능 추가.
-	* 일시 중지 시에도 피버 타임이 경과되는 버그 수정.
-* `v1.0.0` (July 28, 2022) :
-	* 판정 기준 완화 및 일시 중지 메뉴 추가.
-	* 기타 버그 픽스, 예외 처리.
-* `Beta` (July 26, 2022) :
-	* 노트 데이터 유효성 판별을 위한 해시값 표시.
-	* 판정 시스템 변경 및 결과 화면 추가.
-	* 옵션 메뉴, 설정 프로그램 추가.
-	* 6키 → 4 ~ 8키 모드로 지원 확대.
-	* 노트 시간을 BPM 타임으로 변경.
-	* ActionScript 2.0 → 3.0 기반으로 이식.
+## Scoring
 
+- Score:
+  - Base max of 300,000 points, plus bonus points from fever multipliers. (An all-Awesome full combo with no fever active scores exactly 300,000.)
+  - Per-note points are Awesome : Cool : Good : Bad = 5 : 3 : 2 : 1.
+  - Long notes are only scored at their head and tail; combo count has no effect on score.
+  - Fever score multipliers: `×2` → 1.05x, `×3` → 1.1x, `×4` → 1.15x, `×5` → 1.2x.
+- Judgment windows: `Awesome` ±0.05s, `Cool` ±0.1s, `Good` ±0.15s, `Bad` ±0.25s, `Break` (a miss), `Fault` (an indirect miss).
+- HP:
+  - Max gauge of 200; each note restores `Awesome` 5, `Cool` 3, `Good` 2, `Bad` 1.
+  - The held middle of a long note restores 1 every 0.1s.
+  - A `Break` costs 10, a `Fault` costs 5.
+- Fever:
+  - Has `×2` through `×5` tiers; every tier lasts 10 seconds once activated. (Activating at the `×5` tier triggers a `×5` fever.)
+  - Max gauge of 200; only `Awesome` and `Cool` judgments restore 5 each, and the held middle of a long note restores 2 every 0.1s.
+  - Once full, press the fever key to activate it.
+  - A `Break` judgment ends an active fever. (It doesn't affect the gauge itself.)
+- Combo:
+  - Increases in proportion to the active fever tier.
+  - The held middle of a long note adds to the combo every 0.1s.
+- Accuracy (%): (100 × `Awesome` + 80 × `Cool` + 60 × `Good` + 30 × `Bad`) / (`Awesome` + `Cool` + `Good` + `Bad`)
+- Rank:
+  - Based on accuracy.
+  - `F` on a fail, otherwise `SSS` at 99%+, `SS` at 98%+, `S` at 97%+, `AA` at 94%+, `A` at 90%+, `B` at 70%+, `C` at 30%+, `D` below 30%.
 
-## 설명
+## Notes
 
-* `play.exe` : 게임 프로그램
-* `make.exe` : 노트 데이터 생성 프로그램
-* `config.exe` : 키/속도/오프셋 설정 프로그램
-* 속도 조작 : 0.5 단위로 1 ~ 5 선택 가능, 단축키 `↑`, `↓`
-* 플레이 도중 일시 중지 : `Esc`
+- Playing requires a song (`.mp3`), album art (`.jpg`/`.png`), and note data (`.note`).
+- Offset can be adjusted within ±250ms.
+- Optimization is rough, so stuttering can happen — a higher-spec machine is recommended.
+- The program may crash on load if the file size is too large.
+- Note data can be created by pressing keys live in the note editor.
 
+## Creating Note Data
 
-## 판정 체계
+- For correct tags and sync, songs downloaded from [Melon](https://melon.com) (for Korean users) are recommended.
+- For album art, the 200×200 image from a [Bugs](https://music.bugs.co.kr/) (for Korean users) search result works well.
+- A BPM finder useful for creating note data: <https://vocalremover.org/key-bpm-finder>
+- Notes can be charted by pressing the keys live, in time with the song.
+- Option reference:
+  - `KEY MODE`: 4 to 8 keys
+  - `BPM`: the song's BPM, needed since notes are generated relative to it.
+  - `MAXIMUM NOTES PER A BEAT` (leaving this at default is recommended):
+    - Sets how many subdivisions count as the smallest unit within one beat.
+    - For example, at 4 with a BPM of 100, one beat is 0.6s, so the shortest note interval becomes 0.15s.
+  - `MINIMUM LENGTH OF LONG NOTES` (leaving this at default is recommended):
+    - A generated long note's hold duration must exceed this value — anything shorter is created as a regular note instead.
 
-* 점수 :
-	* 기본 300000점 만점 + 피버 가중치에 의한 추가 점수 부여. (피버 발동 없이 `Awesome`으로 올 콤보를 찍으면 300000점이 됨.)
-	* 노트당 획득 점수는 `Awesome` : `Cool` : `Good` : `Bad` = 5 : 3 : 2 : 1.
-	* 롱 노트는 처음과 끝 두 부분에 대해서만 계산하며, 콤보는 점수에 영향을 미치지 않음.
-	* 피버 발동 시 점수 가중치는 `×2` 1.05배, `×3` 1.1배, `×4` 1.15배, `×5` 1.2배.
-* 판정 : `Awesome` ±0.05초, `Cool` ±0.1초, `Good` ±0.15초, `Bad` ±0.25초, `Break` (미스), `Fault` (간접 미스).
-* HP : 
-	* 총 게이지 200, 노트당 `Awesome` 5, `Cool` 3, `Good` 2, `Bad` 1씩 충전.
-	* 롱 노트의 처음과 끝을 제외한 부분에서는 0.1초당 1씩 충전.
-	* `Break`은 10 감소, `Fault`는 5 감소.
-* 피버 : 
-	* `×2 ~ 5` 단계가 있으며, 발동부터 해제될 때까지의 지속 시간은 10초로 모두 동일. (`x5` 단계에서 피버를 발동하면 `x5`.)
-	* 총 게이지 200, `Awesome`, `Cool`으로 판정된 노트에 한해서만 5씩 충전, 롱 노트의 처음과 끝을 제외한 부분에서는 0.1초당 2씩 충전.
-	* 게이지가 차면 피버 키를 눌러 발동할 수 있음.
-	* `Break` 판정 발생 시 피버 해제. (게이지에는 영향을 미치지 않음.)
-* 콤보 :
-	* 피버 단계에 비례하여 증가.
-	* 롱 노트의 처음과 끝을 제외한 중간 부분에서는 0.1초마다 증가.
-* 정확도 (%) : (100 * `Awesome` + 80 * `Cool` + 60 * `Good` + 30 * `Bad`) / (`Awesome` + `Cool` + `Good` + `Bad`)
-* 랭크 :
-	* 정확도 기준.
-	* 생존 실패 시 `F`, 99% 이상 `SSS`, 98% 이상 `SS`, 97% 이상 `S`, 94% 이상 `AA`, 90% 이상 `A`, 70% 이상 `B`, 30% 이상 `C`, 30% 미만 `D`.
+## About
 
+- **Latest version:** `v1.1.0` (July 30, 2022)
+- **Platform:** Windows
+- **Timeline:** 2015-06-05 – 2015-06-11; 2018-12-18; 2022-07-08 – 2022-07-30
+- **Environment:** Adobe Flash CS6, ActionScript 3
 
-## 주의 사항
+## Changelog
 
-* 플레이 시 곡(`.mp3`), 앨범 아트(`.jpg | .png`), 노트 데이터(`.note`) 필요.
-* ±250ms 이내 범위에서 오프셋 설정 가능.
-* 키 입력 안 되면 `한/영` 키를 전환해 볼 것. (`Caps Lock`은 상관 없음.)
-* 최적화 수준이 좋지 않아 끊김 현상이 있을 수 있으므로, 고사양 환경을 권장.
-* 파일을 로드하는 시점에서, 파일의 용량이 다소 크다면 프로그램이 강제 종료될 수 있음.
-* 노트 데이터는 노트 생성 프로그램에서 직접 키보드를 눌러 생성할 수 있음.
+- `v1.1.0` (July 30, 2022):
+  - Added an offset setting.
+  - Fixed a bug where fever time kept counting down while paused.
+- `v1.0.0` (July 28, 2022):
+  - Loosened the judgment thresholds and added a pause menu.
+  - Other bug fixes and edge-case handling.
+- `Beta` (July 26, 2022):
+  - Added the HP and fever system.
+  - Added a hash value to verify note data integrity.
+  - Changed the judgment and scoring systems, and added a results screen.
+  - Added an options menu and a separate settings program.
+  - Expanded from 6-key only to 4–8 key modes.
+  - Made note timing BPM-based — the note interval, previously fixed regardless of the song, is now computed per song from an entered BPM.
+  - Ported from ActionScript 2.0 to 3.0.
+- 2018-12-18:
+  - Added loading note data from a file, and the note editor (`make.exe`) used to create it — until then, the game only played back hardcoded note data.
+  - Added a rough scoring system, put together in a single day.
+  - The note interval was still fixed, independent of the song's BPM.
+- 2015-06-05 – 2015-06-11:
+  - First version — hardcoded note data, a fixed note interval, judgment, and combo counting.
 
-
-## 노트 데이터 생성 시 참고 사항
-
-* 곡 파일은 정상적인 태그 출력 및 싱크를 위해 [멜론](https://melon.com)에서 다운로드 받아 사용하는 것을 추천.
-* 앨범 아트 파일은 [벅스](https://music.bugs.co.kr/)에서 곡을 검색하면 나오는 `200 * 200` 사이즈의 사진을 다운로드하는 것을 추천.
-* 노트 데이터 생성 시 참고할 수 있는 BPM 측정기 : <https://vocalremover.org/ko/key-bpm-finder>
-* 노트를 생성하고 싶은 타이밍에 맞추어 직접 키를 눌러서 채보를 생성할 수 있음.
-* 옵션 설명 :
-	* `KEY MODE` : 4키에서 8키까지 선택 가능
-	* `BPM` : 사용할 노래의 BPM. BPM에 맞춰 노트를 생성해야 하므로 필요.
-	* `MAXIMUM NOTES PER A BEAT` (수정하지 않는 것을 권장) :
-		* 한 비트 내에서 몇 박자를 최소 단위로 할 것인지 결정.
-		* 예로 들어 4로 설정한 경우, BPM이 100이면 한 비트는 0.6초이므로 0.15초가 최소 박자 길이가 됨.
-	* `MINIMUM LENGTH OF LONG NOTES` (수정하지 않는 것을 권장) :
-		* 생성되는 롱 노트의 지속 시간이 이보다 길어야 함. 이보다 지속 시간이 짧으면 일반 노트로 인식되어 생성됨.
+---
+[github.com/canplane/Take-0](https://github.com/canplane/Take-0)
